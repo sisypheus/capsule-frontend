@@ -15,6 +15,6 @@ export const getDeployments = async (): Promise<Deployment[]> => {
 };
 
 export const createDeployment = async (imageName: string): Promise<Deployment> => {
-  const response = await api.post('/deployments', { imageName });
+  const response = await api.post('/deployments', { imageName }, {withCredentials: true});
   return response.data;
 };
