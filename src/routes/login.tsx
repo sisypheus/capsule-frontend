@@ -6,7 +6,7 @@ export const Route = createFileRoute('/login')({
 
 function RouteComponent() {
   const handleLogin = () => {
-    window.location.href = 'http://localhost:3000/auth/github/login';
+    window.location.href = import.meta.env.VITE_BACKEND_URL + '/auth/github/login';
   };
 
   return (

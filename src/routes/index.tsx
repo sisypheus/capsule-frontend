@@ -12,7 +12,7 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/auth/me', { withCredentials: true })
+    axios.get(import.meta.env.VITE_BACKEND_URL, { withCredentials: true })
       .then((response: any) => {
         setUser(response.data);
       })

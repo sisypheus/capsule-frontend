@@ -1,26 +1,22 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useDeployments } from '@/hooks/useDeployments';
-import axios from 'axios';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
-import { createDeployment, type Deployment } from '@/features/deployments/api';
+import { createDeployment } from '@/features/deployments/api';
 
 export const Route = createFileRoute('/dashboard')({
   component: DashboardPage,
 })
 
 function DashboardPage() {
-  const [imageName, setImageName] = useState('nginxdemos/hello'); // Une image simple pour tester
+  const [imageName, setImageName] = useState('nginxdemos/hello');
   const queryClient = useQueryClient();
   const { data: deployments, isLoading, isError } = useDeployments();
 
-  // if (isLoading) return <div>Chargement de vos déploiements...</div>;
-  // if (isError) return <div>Erreur lors du chargement des données.</div>;
 
   const mutation = useMutation({
     mutationFn: createDeployment,
     onSuccess: () => {
-      // Magique ! Ceci va automatiquement rafraîchir la query ['deployments']
       queryClient.invalidateQueries({ queryKey: ['deployments'] });
     },
   });
@@ -50,8 +46,6 @@ function DashboardPage() {
       </form>
 
       <h3>Mes Déploiements</h3>
-      {/* {isLoading && <p>Chargement...</p>}
-      {isError && <p>Impossible de charger les déploiements.</p>} */}
       <ul>
         {deployments?.map((dep) => (
           <li key={dep.id}>
