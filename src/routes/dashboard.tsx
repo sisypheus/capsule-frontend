@@ -1,6 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useDeployments } from '@/hooks/useDeployments';
-// import { CreateDeploymentForm } from '@/components/CreateDeploymentForm';
 import axios from 'axios';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -9,15 +8,6 @@ import { createDeployment, type Deployment } from '@/features/deployments/api';
 export const Route = createFileRoute('/dashboard')({
   component: DashboardPage,
 })
-
-// interface Deployment {
-//   id: string;
-//   imageName: string;
-//   status: 'provisioning' | 'active' | 'failed' | 'destroyed';
-//   url?: string;
-//   createdAt: string;
-// }
-
 
 function DashboardPage() {
   const [imageName, setImageName] = useState('nginxdemos/hello'); // Une image simple pour tester
