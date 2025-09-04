@@ -8,9 +8,9 @@ export function SlimLayout({ children }: { children: React.ReactNode }) {
           </main>
         </div>
         <div className="hidden sm:contents lg:relative lg:block lg:flex-1">
-          <image
+          <img
             className="absolute inset-0 h-full w-full object-cover"
-            href=''
+            src='/images/bg-auth.jpg'
           />
         </div>
       </div>

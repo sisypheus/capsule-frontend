@@ -1,8 +1,12 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
+import { Button } from '@/components/Button'
+// import { Logo } from '@/components/Logo'
+import { SlimLayout } from '@/components/SlimLayout'
 
 export const Route = createFileRoute('/login')({
   component: RouteComponent,
 })
+
 
 function RouteComponent() {
   const handleLogin = () => {
@@ -10,61 +14,25 @@ function RouteComponent() {
   };
 
   return (
-    <div>
-      <h1>Bienvenue sur votre PaaS</h1>
-      <button onClick={handleLogin}>
-        Se connecter avec GitHub
-      </button>
-    </div>
-  );
-};
-
-/*
-  return (
     <SlimLayout>
       <div className="flex">
-        <Link href="/" aria-label="Home">
-          <Logo className="h-10 w-auto" />
+        <Link to="/" aria-label="Home">
+          {/* <Logo className="h-10 w-auto" /> */}
         </Link>
       </div>
-      <h2 className="mt-20 text-lg font-semibold text-gray-900">
-        Sign in to your account
-      </h2>
-      <p className="mt-2 text-sm text-gray-700">
-        Don’t have an account?{' '}
-        <Link
-          href="/register"
-          className="font-medium text-blue-600 hover:underline"
-        >
-          Sign up
-        </Link>{' '}
-        for a free trial.
-      </p>
-      <form action="#" className="mt-10 grid grid-cols-1 gap-y-8">
-        <TextField
-          label="Email address"
-          name="email"
-          type="email"
-          autoComplete="email"
-          required
-        />
-        <TextField
-          label="Password"
-          name="password"
-          type="password"
-          autoComplete="current-password"
-          required
-        />
-        <div>
-          <Button type="submit" variant="solid" color="blue" className="w-full">
-            <span>
-              Sign in <span aria-hidden="true">&rarr;</span>
-            </span>
-          </Button>
-        </div>
-      </form>
+      <div className='my-8'>
+        <h2 className="mt-20 text-lg font-semibold text-gray-900">
+          Sign in to your account
+        </h2>
+        <p className="mt-2 text-sm text-gray-700">
+          Sign in with github to deploy your projects
+        </p>
+      </div>
+      <Button onClick={handleLogin} variant='solid' color='blue' className='w-full'>
+        <span>
+          Sign in with github
+        </span>
+      </Button>
     </SlimLayout>
   )
-
-*/
-
+}
