@@ -1,8 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useDeployments } from '@/hooks/useDeployments';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createDeployment } from '@/features/deployments/api';
+import { useRepos } from '@/hooks/useRepos';
 
 export const Route = createFileRoute('/dashboard')({
   component: DashboardPage,
@@ -12,6 +13,7 @@ function DashboardPage() {
   const [imageName, setImageName] = useState('nginxdemos/hello');
   const queryClient = useQueryClient();
   const { data: deployments, isLoading, isError } = useDeployments();
+  const { data: repos, isError: reposError } = useRepos();
 
 
   const mutation = useMutation({
@@ -27,6 +29,8 @@ function DashboardPage() {
       mutation.mutate(imageName);
     }
   };
+
+  console.log(repos)
 
   return (
     <div>
@@ -44,6 +48,12 @@ function DashboardPage() {
         </button>
         {mutation.isError && <p style={{ color: 'red' }}>Erreur: {mutation.error.message}</p>}
       </form>
+
+      {reposError &&
+        <a href="http://localhost:3000/github/install">
+          Installer l'App GitHub pour lister vos dépôts
+        </a>
+      }
 
       <h3>Mes Déploiements</h3>
       <ul>
