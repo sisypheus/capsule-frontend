@@ -68,10 +68,11 @@ function classNames(...classes: string[]) {
           ))}
         </ul> */}
 
-export default function Deployments({data}: any) {
+export default function Deployments({ data, show = 5 }: any) {
+  console.log(data)
   return (
     <ul role="list" className="divide-y divide-white/5">
-      {deployments.map((deployment: any) => (
+      {deployments.slice(0, show).map((deployment: any) => (
         <li key={deployment.id} className="relative flex items-center space-x-4 py-4">
           <div className="min-w-0 flex-auto">
             <div className="flex items-center gap-x-3">
@@ -80,14 +81,14 @@ export default function Deployments({data}: any) {
               </div>
               <h2 className="min-w-0 text-sm font-semibold leading-6 text-white">
                 <a href={deployment.href} className="flex gap-x-2">
-                  <span className="truncate">{deployment.teamName}</span>
-                  <span className="text-gray-400">/</span>
-                  <span className="whitespace-nowrap">{deployment.projectName}</span>
+                  <span className="truncate text-gray-800">{deployment.teamName}</span>
+                  <span className="text-gray-800">/</span>
+                  <span className="whitespace-nowrap text-gray-800">{deployment.projectName}</span>
                   <span className="absolute inset-0" />
                 </a>
               </h2>
             </div>
-            <div className="mt-3 flex items-center gap-x-2.5 text-xs leading-5 text-gray-400">
+            <div className="mt-3 flex items-center gap-x-2.5 text-xs leading-5 text-gray-500">
               <p className="truncate">{deployment.description}</p>
               <svg viewBox="0 0 2 2" className="h-0.5 w-0.5 flex-none fill-gray-300">
                 <circle r={1} cx={1} cy={1} />
@@ -106,6 +107,12 @@ export default function Deployments({data}: any) {
           <ChevronRightIcon aria-hidden="true" className="h-5 w-5 flex-none text-gray-400" />
         </li>
       ))}
+
+      {deployments.length > show && (
+        <li key="more" className="col-span-full rounded-xl border border-gray-200 bg-gray-50 p-6 text-center">
+          Too many deployments to display — showing {Math.min(show, deployments.length)} of {deployments.length}.
+        </li>
+      )}
     </ul>
   )
 }

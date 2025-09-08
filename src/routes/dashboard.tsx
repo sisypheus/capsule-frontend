@@ -34,13 +34,15 @@ function DashboardPage() {
     }
   };
 
+  const githubLink = () => {
+    window.location.href = import.meta.env.VITE_BACKEND_URL + "/github/install"
+  }
+
   console.log(repos)
   console.log(deployments)
 
   return (
     <AppLayout>
-      <Divider text='Deployments' />
-
       <div>
         {/* <form onSubmit={handleSubmit}>
           <input
@@ -55,19 +57,18 @@ function DashboardPage() {
           </button>
           {mutation.isError && <p style={{ color: 'red' }}>Erreur: {mutation.error.message}</p>}
         </form> */}
-        Deployments
-        <Deployments deployments={deployments} />
 
-        {reposError &&
-          // TODO: env variable
-          <a href="http://localhost:3000/github/install">
-            Installer l'App GitHub pour lister vos dépôts
-          </a>
-        }
+        <div className='my-8'>
+          <Divider text='Deployments' />
+        </div>
+        <Deployments deployments={deployments} show={3} />
 
-        <Divider text='Projects' />
 
-        <Projects projects={repos} />
+        <div className='my-8'>
+          <Divider text='Projects' />
+        </div>
+
+        <Projects projects={repos || []} emptyAction={githubLink} show={3} />
       </div>
     </AppLayout>
   );
