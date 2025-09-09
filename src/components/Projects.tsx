@@ -80,7 +80,7 @@ export default function Projects({ projects, emptyAction, show = 5, onShowMore, 
             <div className="flex items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6">
               <img
                 alt={project.name}
-                src={project.imageUrl}
+                src={project.icon}
                 className="h-12 w-12 flex-none rounded-lg bg-white object-cover ring-1 ring-gray-900/10"
               />
               <div className="text-sm font-medium leading-6 text-gray-900">{project.name}</div>

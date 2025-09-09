@@ -1,5 +1,6 @@
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
 import { Button } from './Button'
+import { ArrowRightIcon } from '@heroicons/react/24/outline'
 
 const statuses = {
   offline: 'text-gray-500 bg-gray-100/10',
@@ -10,48 +11,17 @@ const environments = {
   Preview: 'text-gray-400 bg-gray-400/10 ring-gray-400/20',
   Production: 'text-indigo-400 bg-indigo-400/10 ring-indigo-400/30',
 }
-const deployments = [
-  {
-    id: 1,
-    href: '#',
-    projectName: 'ios-app',
-    teamName: 'Planetaria',
-    status: 'offline',
-    statusText: 'Initiated 1m 32s ago',
-    description: 'Deploys from GitHub',
-    environment: 'Preview',
-  },
-  {
-    id: 2,
-    href: '#',
-    projectName: 'mobile-api',
-    teamName: 'Planetaria',
-    status: 'online',
-    statusText: 'Deployed 3m ago',
-    description: 'Deploys from GitHub',
-    environment: 'Production',
-  },
-  {
-    id: 3,
-    href: '#',
-    projectName: 'tailwindcss.com',
-    teamName: 'Tailwind Labs',
-    status: 'offline',
-    statusText: 'Deployed 3h ago',
-    description: 'Deploys from GitHub',
-    environment: 'Preview',
-  },
-  {
-    id: 4,
-    href: '#',
-    projectName: 'api.protocol.chat',
-    teamName: 'Protocol',
-    status: 'error',
-    statusText: 'Failed to deploy 6d ago',
-    description: 'Deploys from GitHub',
-    environment: 'Preview',
-  },
-]
+
+// {
+//   id: 4,
+//   href: '#',
+//   projectName: 'api.protocol.chat',
+//   teamName: 'Protocol',
+//   status: 'error',
+//   statusText: 'Failed to deploy 6d ago',
+//   description: 'Deploys from GitHub',
+//   environment: 'Preview',
+// }
 
 export default function Deployments({ deployments, show = 5, emptyAction, onShowMore, footer }: any) {
   function classNames(...classes: string[]) {
@@ -59,6 +29,40 @@ export default function Deployments({ deployments, show = 5, emptyAction, onShow
   }
 
   const visible = deployments.slice(0, show);
+
+  if (!deployments || deployments.length === 0) {
+    return (
+      <div className="text-center">
+        <svg
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          className="mx-auto h-12 w-12 text-gray-400"
+        >
+          <path
+            d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"
+            strokeWidth={2}
+            vectorEffect="non-scaling-stroke"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+        <h3 className="mt-2 text-sm font-semibold text-gray-900">No deployments</h3>
+        <p className="mt-1 text-sm text-gray-500">Create a new one from the projects page</p>
+        <div className="mt-6">
+          <button
+            type="button"
+            onClick={emptyAction}
+            className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 cursor-pointer"
+          >
+            <ArrowRightIcon aria-hidden="true" className="-ml-0.5 mr-1.5 h-5 w-5" />
+            Deploy project
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>

@@ -6,7 +6,9 @@ async function fetchUser() {
     const { data } = await api.get('/auth/me');
     return data;
   } catch (err: any) {
-    if (err.response?.status === 401) return null;
+    if (err.response?.status === 401) {
+      return null
+    }
     throw err;
   }
 }
