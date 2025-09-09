@@ -1,4 +1,5 @@
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
+import { Button } from './Button'
 
 const statuses = {
   offline: 'text-gray-500 bg-gray-100/10',
@@ -52,67 +53,63 @@ const deployments = [
   },
 ]
 
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ')
-}
+export default function Deployments({ deployments, show = 5, emptyAction, onShowMore, footer }: any) {
+  function classNames(...classes: string[]) {
+    return classes.filter(Boolean).join(' ')
+  }
 
-{/* <ul>
-          {deployments?.map((dep) => (
-            <li key={dep.id}>
-              <strong>{dep.image_name}</strong> - Status: {dep.status}
-              {dep.status === 'provisioning' && ' (création...)'}
-              {dep.status === 'active' && dep.url && (
-                <> - <a href={dep.url} target="_blank" rel="noopener noreferrer">Accéder à l'app</a> </>
-              )}
-            </li>
-          ))}
-        </ul> */}
+  const visible = deployments.slice(0, show);
 
-export default function Deployments({ data, show = 5 }: any) {
-  console.log(data)
   return (
-    <ul role="list" className="divide-y divide-white/5">
-      {deployments.slice(0, show).map((deployment: any) => (
-        <li key={deployment.id} className="relative flex items-center space-x-4 py-4">
-          <div className="min-w-0 flex-auto">
-            <div className="flex items-center gap-x-3">
-              <div className={classNames(statuses[deployment.status], 'flex-none rounded-full p-1')}>
-                <div className="h-2 w-2 rounded-full bg-current" />
+    <>
+      <ul role="list" className="divide-y divide-white/5">
+        {visible.map((deployment: any) => (
+          <li key={deployment.id} className="relative flex items-center space-x-4 py-4">
+            <div className="min-w-0 flex-auto">
+              <div className="flex items-center gap-x-3">
+                <div className={classNames(statuses[deployment.status], 'flex-none rounded-full p-1')}>
+                  <div className="h-2 w-2 rounded-full bg-current" />
+                </div>
+                <h2 className="min-w-0 text-sm font-semibold leading-6 text-white">
+                  <a href={deployment.href} className="flex gap-x-2">
+                    <span className="truncate text-gray-800">{deployment.name}</span>
+                    <span className="text-gray-800">/</span>
+                    <span className="whitespace-nowrap text-gray-800">{deployment.id}</span>
+                    <span className="absolute inset-0" />
+                  </a>
+                </h2>
               </div>
-              <h2 className="min-w-0 text-sm font-semibold leading-6 text-white">
-                <a href={deployment.href} className="flex gap-x-2">
-                  <span className="truncate text-gray-800">{deployment.teamName}</span>
-                  <span className="text-gray-800">/</span>
-                  <span className="whitespace-nowrap text-gray-800">{deployment.projectName}</span>
-                  <span className="absolute inset-0" />
-                </a>
-              </h2>
+              <div className="mt-3 flex items-center gap-x-2.5 text-xs leading-5 text-gray-500">
+                <p className="truncate">{deployment.description}</p>
+                <svg viewBox="0 0 2 2" className="h-0.5 w-0.5 flex-none fill-gray-300">
+                  <circle r={1} cx={1} cy={1} />
+                </svg>
+                <p className="whitespace-nowrap">{deployment.statusText}</p>
+              </div>
             </div>
-            <div className="mt-3 flex items-center gap-x-2.5 text-xs leading-5 text-gray-500">
-              <p className="truncate">{deployment.description}</p>
-              <svg viewBox="0 0 2 2" className="h-0.5 w-0.5 flex-none fill-gray-300">
-                <circle r={1} cx={1} cy={1} />
-              </svg>
-              <p className="whitespace-nowrap">{deployment.statusText}</p>
+            <div
+              className={classNames(
+                environments[deployment.environment],
+                'flex-none rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset',
+              )}
+            >
+              {deployment.environment}
             </div>
+            <ChevronRightIcon aria-hidden="true" className="h-5 w-5 flex-none text-gray-400" />
+          </li>
+        ))}
+      </ul >
+      {
+        footer ? (
+          <div className="w-full flex items-center justify-center py-8">{footer}</div>
+        ) : onShowMore && deployments.length > show ? (
+          <div className="w-full flex items-center justify-center py-8">
+            <Button onClick={onShowMore} className="cursor-pointer">
+              Show more
+            </Button>
           </div>
-          <div
-            className={classNames(
-              environments[deployment.environment],
-              'flex-none rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset',
-            )}
-          >
-            {deployment.environment}
-          </div>
-          <ChevronRightIcon aria-hidden="true" className="h-5 w-5 flex-none text-gray-400" />
-        </li>
-      ))}
-
-      {deployments.length > show && (
-        <li key="more" className="col-span-full rounded-xl border border-gray-200 bg-gray-50 p-6 text-center">
-          Too many deployments to display — showing {Math.min(show, deployments.length)} of {deployments.length}.
-        </li>
-      )}
-    </ul>
+        ) : null
+      }
+    </>
   )
 }

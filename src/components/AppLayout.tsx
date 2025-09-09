@@ -23,11 +23,7 @@ const userNavigation = [
 
 export default function AppLayout({ children }: { children: ReactNode }) {
   const current = useLocation()
-  console.log(current.href)
-  console.log(current.pathname)
-
   const current_page = navigation.find((value) => value.href == current.href)
-  console.log(current_page)
 
   function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')

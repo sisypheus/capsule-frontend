@@ -1,10 +1,10 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getDeployments, createDeployment } from '@/features/deployments/api';
 
-export const useDeployments = () => {
+export const useDeployments = (page = 1, perPage = 10) => {
   return useQuery({
     queryKey: ['deployments'],
-    queryFn: getDeployments,
+    queryFn: () => getDeployments(page, perPage),
   });
 };
 

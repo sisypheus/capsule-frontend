@@ -9,8 +9,8 @@ export interface Deployment {
   url: string | null;
 }
 
-export const getDeployments = async (): Promise<Deployment[]> => {
-  const response = await api.get('/deployments');
+export const getDeployments = async (page: number, perPage: number): Promise<Deployment[]> => {
+  const response = await api.get('/deployments?page=' + page + "&per_page=" + perPage);
   return response.data;
 };
 
