@@ -10,12 +10,7 @@ export interface Deployment {
   url: string | null;
 }
 
-export const getRepos = async (): Promise<Deployment[]> => {
-  const response = await api.get('/github/repos');
+export const getRepos = async (page: any, perPage: any): Promise<Deployment[]> => {
+  const response = await api.get('/github/repos' + "?page=" + page + "&per_page=" + perPage);
   return response.data;
 };
-
-// export const connectRepos = async (imageName: string): Promise<Deployment> => {
-//   const response = await api.post('/deployments', { imageName }, {withCredentials: true});
-//   return response.data;
-// };

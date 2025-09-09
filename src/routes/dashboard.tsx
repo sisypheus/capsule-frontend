@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useDeployments } from '@/hooks/useDeployments';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
@@ -16,6 +16,7 @@ export const Route = createFileRoute('/dashboard')({
 function DashboardPage() {
   const [imageName, setImageName] = useState('nginxdemos/hello');
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const { data: deployments, isLoading, isError } = useDeployments();
   const { data: repos, isError: reposError } = useRepos();
 
@@ -61,14 +62,23 @@ function DashboardPage() {
         <div className='my-8'>
           <Divider text='Deployments' />
         </div>
-        <Deployments deployments={deployments} show={3} />
+        <Deployments
+          deployments={deployments}
+          show={3}
+          showMore={() => navigate({ to: "/deployments" })}
+        />
 
 
         <div className='my-8'>
           <Divider text='Projects' />
         </div>
 
-        <Projects projects={repos || []} emptyAction={githubLink} show={3} />
+        <Projects
+          projects={repos || []}
+          emptyAction={githubLink}
+          show={3}
+          onShowMore={() => navigate({ to: "/projects" })}
+        />
       </div>
     </AppLayout>
   );
