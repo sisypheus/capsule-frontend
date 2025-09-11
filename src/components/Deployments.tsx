@@ -23,10 +23,13 @@ const environments = {
 //   environment: 'Preview',
 // }
 
-export default function Deployments({ deployments, show = 5, emptyAction, onShowMore, footer }: any) {
+export default function Deployments({ deployments, show = 5, emptyAction, onShowMore, footer, isLoading }: any) {
   function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
   }
+
+  if (isLoading)
+    return <SkeletonDeployments show={show}/>
 
   const visible = deployments.slice(0, show);
 
@@ -115,5 +118,43 @@ export default function Deployments({ deployments, show = 5, emptyAction, onShow
         ) : null
       }
     </>
+  )
+}
+
+export function SkeletonDeployments({show = 5}) {
+  return (
+    <ul role="list" className="divide-y divide-white/5">
+      {Array.from({length: show}).map((placeholder: any, index: number) => (
+        <li key={index} className="relative flex items-center space-x-4 py-4">
+          <div className="min-w-0 flex-auto">
+            <div className="flex items-center gap-x-3">
+              <div>
+                <div className="h-2 w-2 rounded-full bg-gray-200 animate-pulse" />
+              </div>
+              <h2 className="min-w-0 text-sm font-semibold leading-6 text-white">
+                <div className="flex gap-x-2">
+                  <span className="truncate text-gray-200 animate-pulse w-32 rounded-2xl bg-gray-200"></span>
+                  <span className="text-gray-200">/</span>
+                  <span className="whitespace-nowrap text-gray-200 animate-pulse w-32 rounded-2xl bg-gray-200"></span>
+                  <span className="absolute inset-0" />
+                </div>
+              </h2>
+            </div>
+            <div className="mt-3 flex items-center gap-x-2.5 text-xs leading-5 text-gray-200">
+              <p className="truncate animate-pulse bg-gray-200"></p>
+              <svg viewBox="0 0 2 2" className="h-0.5 w-0.5 flex-none fill-gray-300">
+                <circle r={1} cx={1} cy={1} />
+              </svg>
+              <p className="whitespace-nowrap animate-pulse bg-gray-200"></p>
+            </div>
+          </div>
+          <div
+            className="flex-none rounded-full px-2 py-1 text-xs font-medium animate-pulse bg-gray-200"
+          >
+          </div>
+          <ChevronRightIcon aria-hidden="true" className="h-5 w-5 flex-none text-gray-200 animate-pulse bg-gray-200 rounded-2xl" />
+        </li>
+      ))}
+    </ul >
   )
 }

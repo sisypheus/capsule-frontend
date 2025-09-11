@@ -30,11 +30,15 @@ const clients = [
   }
 ]
 
-export default function Projects({ projects, emptyAction, show = 5, onShowMore, footer }: any) {
+export default function Projects({ projects, emptyAction, show = 5, onShowMore, footer, isLoading}: any) {
 
   function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
   }
+
+  console.log(show)
+  if (isLoading)
+    return <SkeletonProjects show={show}/>
 
   if (!projects || projects.length === 0) {
     return (
@@ -147,4 +151,45 @@ export default function Projects({ projects, emptyAction, show = 5, onShowMore, 
       ) : null}
     </>
   );
+}
+
+export function SkeletonProjects({show = 3}) {
+  console.log(show)
+  return (
+    <ul role="list" className="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8">
+      {Array.from({length: show}).map((project: any, index: number) => (
+        <li key={index} className="overflow-hidden rounded-xl border border-gray-200">
+          <div className="flex items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6">
+            <img
+              className="h-12 w-12 flex-none rounded-lg object-cover bg-gray-200 animate-pulse"
+            />
+            <div className="text-sm font-medium leading-6 bg-gray-200 rounded-2xl w-32 h-4 animate-pulse"></div>
+
+            <Menu as="div" className="relative ml-auto">
+              <MenuButton className="-m-2.5 block p-2.5 text-gray-200 animate-pulse">
+                <span className="sr-only">Open options</span>
+                <EllipsisHorizontalIcon aria-hidden="true" className="h-5 w-5" />
+              </MenuButton>
+            </Menu>
+          </div>
+
+          <dl className="-my-3 divide-y divide-gray-100 px-6 text-sm leading-6 bg-white py-8">
+            <div className="flex justify-between gap-x-4 py-3 bg-gray-200 rounded-2xl animate-pulse">
+              <dt className="text-gray-500 w-32 h-6"></dt>
+              <dd className="text-gray-700 ">
+                <span className='bg-gray-200 animate-pulse w-32'></span>
+              </dd>
+            </div>
+
+            <div className="flex mt-4 justify-between gap-x-4 py-3 bg-gray-200 rounded-2xl animate-pulse">
+              <dt className="text-gray-500 w-32 h-6"></dt>
+              <dd className="flex items-start gap-x-2 animate-pulse rounded-2xl bg-gray-200">
+                <span className='bg-gray-200 animate-pulse w-32 rounded-2xl'></span>
+              </dd>
+            </div>
+          </dl>
+        </li>
+      ))}
+    </ul>
+  )
 }

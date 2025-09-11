@@ -1,12 +1,10 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useDeployments } from '@/hooks/useDeployments';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { createDeployment } from '@/features/deployments/api';
 import { useRepos } from '@/hooks/useRepos';
 import AppLayout from '@/components/AppLayout';
+import Divider from '@/components/Divider';
 import Deployments from '@/components/Deployments';
 import Projects from '@/components/Projects';
-import Divider from '@/components/Divider';
 
 export const Route = createFileRoute('/dashboard')({
   component: DashboardPage,
@@ -14,11 +12,11 @@ export const Route = createFileRoute('/dashboard')({
 
 function DashboardPage() {
   const navigate = useNavigate();
-  const { data: deployments, isLoading, isError } = useDeployments();
-  const { data: repos, isError: reposError } = useRepos();
+  const { data: deployments, isLoading: isLoadingDeployments } = useDeployments();
+  const { data: repos, isLoading: isLoadingProjects } = useRepos();
 
   const githubLink = () => {
-    navigate({to: import.meta.env.VITE_BACKEND_URL + "/github/install"})
+    navigate({ to: import.meta.env.VITE_BACKEND_URL + "/github/install" })
   }
 
   const deployProject = () => {
@@ -36,6 +34,7 @@ function DashboardPage() {
           show={4}
           emptyAction={deployProject}
           onShowMore={() => navigate({ to: "/deployments" })}
+          isLoading={isLoadingDeployments}
         />
 
 
@@ -48,6 +47,7 @@ function DashboardPage() {
           emptyAction={githubLink}
           show={3}
           onShowMore={() => navigate({ to: "/projects" })}
+          isLoading={isLoadingProjects}
         />
       </div>
     </AppLayout>

@@ -29,24 +29,6 @@ function RouteComponent() {
     staleTime: 1000 * 10,
   });
 
-  // Prefetch next page when we have enough data
-  useEffect(() => {
-    // determine totalPages if available
-    const totalPages =
-      (deployments && typeof deployments === 'object' && 'totalPages' in deployments && (deployments as any).totalPages) ??
-      (deployments && typeof deployments === 'object' && 'total' in deployments ? Math.ceil((deployments as any).total / perPage) : undefined);
-
-    if (totalPages && page < totalPages) {
-      queryClient.prefetchQuery(['deployments', page + 1, perPage], () =>
-        getDeployments(page + 1, perPage)
-      );
-    }
-  }, [deployments, page, perPage, queryClient]);
-
-  if (isLoading) {
-    return <div className="p-6">Loading projects…</div>;
-  }
-
   if (isError) {
     return <div className="p-6 text-red-600">Error loading projects: {(error as any)?.message ?? String(error)}</div>;
   }
@@ -73,6 +55,7 @@ function RouteComponent() {
           deployments={deployments}
           emptyAction={() => navigate({ to: "/projects" })}
           show={perPage}
+          isLoading={isLoading}
           footer={
             <Pagination
               current={page}

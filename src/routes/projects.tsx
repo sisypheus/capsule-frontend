@@ -41,27 +41,10 @@ function RouteComponent() {
     staleTime: 1000 * 60 * 2, // 2 minutes (tweak as you like)
   });
 
-  // Prefetch next page when we have enough data
-  useEffect(() => {
-    // determine totalPages if available
-    const totalPages =
-      (repos && typeof repos === 'object' && 'totalPages' in repos && (repos as any).totalPages) ??
-      (repos && typeof repos === 'object' && 'total' in repos ? Math.ceil((repos as any).total / perPage) : undefined);
-
-    if (totalPages && page < totalPages) {
-      queryClient.prefetchQuery(['repos', page + 1, perPage], () =>
-        getRepos(page + 1, perPage)
-      );
-    }
-  }, [repos, page, perPage, queryClient]);
-
-  if (isLoading) {
-    return <div className="p-6">Loading projects…</div>;
-  }
-
   if (isError) {
     return <div className="p-6 text-red-600">Error loading projects: {(error as any)?.message ?? String(error)}</div>;
   }
+  console.log(perPage)
 
   // Normalize the API response into an items array and total / totalPages if available
   const items: Repo[] = Array.isArray(repos)
@@ -102,6 +85,7 @@ function RouteComponent() {
           projects={repos}
           emptyAction={githubLink}
           show={perPage}
+          isLoading={isLoading}
           footer={
             <Pagination
               current={page}
