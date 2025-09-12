@@ -2,6 +2,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { EllipsisHorizontalIcon } from '@heroicons/react/20/solid'
 import { PlusIcon } from '@heroicons/react/20/solid'
 import { Button } from './Button';
+import { Link } from '@tanstack/react-router';
 
 const clients = [
   {
@@ -36,7 +37,6 @@ export default function Projects({ projects, emptyAction, show = 5, onShowMore, 
     return classes.filter(Boolean).join(' ')
   }
 
-  console.log(show)
   if (isLoading)
     return <SkeletonProjects show={show}/>
 
@@ -109,12 +109,12 @@ export default function Projects({ projects, emptyAction, show = 5, onShowMore, 
                   </MenuItem>
                   <MenuItem>
                     {() => (
-                      <a
-                        href="#"
+                      <Link to="/deploy"
+                      state={{project: project}}
                         className="block px-3 py-1 text-sm leading-6 text-gray-900 data-[focus]:bg-gray-50"
                       >
-                        Edit<span className="sr-only">, {project.name}</span>
-                      </a>
+                        Deploy
+                      </Link>
                     )}
                   </MenuItem>
                 </MenuItems>

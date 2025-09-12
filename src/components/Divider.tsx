@@ -1,4 +1,4 @@
-export default function Divider({ text, ...props }: { text: string }) {
+export default function Divider({ text, ...props }: { text?: string }) {
   return (
     <div className="relative">
       <div aria-hidden="true" className="absolute inset-0 flex items-center">

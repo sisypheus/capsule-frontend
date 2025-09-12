@@ -26,7 +26,7 @@ function RouteComponent() {
   } = useQuery({
     queryKey: ['deployments', page, perPage],
     queryFn: () => getDeployments(page, perPage),
-    staleTime: 1000 * 10,
+    staleTime: 1000 * 60,
   });
 
   if (isError) {

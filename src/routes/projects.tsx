@@ -38,13 +38,12 @@ function RouteComponent() {
   } = useQuery({
     queryKey: ['repos', page, perPage],
     queryFn: () => getRepos(page, perPage),
-    staleTime: 1000 * 60 * 2, // 2 minutes (tweak as you like)
+    staleTime: 1000 * 60 * 2,
   });
 
   if (isError) {
     return <div className="p-6 text-red-600">Error loading projects: {(error as any)?.message ?? String(error)}</div>;
   }
-  console.log(perPage)
 
   // Normalize the API response into an items array and total / totalPages if available
   const items: Repo[] = Array.isArray(repos)

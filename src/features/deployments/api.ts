@@ -9,12 +9,20 @@ export interface Deployment {
   url: string | null;
 }
 
+export type DeploymentDto = {
+  project: string;
+  project_name: string;
+  branch?: string;
+  dockerfile_path?: string;
+}
+
 export const getDeployments = async (page: number, perPage: number): Promise<Deployment[]> => {
   const response = await api.get('/deployments?page=' + page + "&per_page=" + perPage);
   return response.data;
 };
 
-export const createDeployment = async (imageName: string): Promise<Deployment> => {
-  const response = await api.post('/deployments', { imageName }, {withCredentials: true});
+export const createDeployment = async (deploymentDto: DeploymentDto): Promise<Deployment> => {
+  console.log(deploymentDto)
+  const response = await api.post('/deployments', { ...deploymentDto }, {withCredentials: true});
   return response.data;
 };

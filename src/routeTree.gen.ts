@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as DeploymentsRouteImport } from './routes/deployments'
+import { Route as DeployRouteImport } from './routes/deploy'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -30,6 +31,11 @@ const DeploymentsRoute = DeploymentsRouteImport.update({
   path: '/deployments',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DeployRoute = DeployRouteImport.update({
+  id: '/deploy',
+  path: '/deploy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -44,6 +50,7 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
+  '/deploy': typeof DeployRoute
   '/deployments': typeof DeploymentsRoute
   '/login': typeof LoginRoute
   '/projects': typeof ProjectsRoute
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
+  '/deploy': typeof DeployRoute
   '/deployments': typeof DeploymentsRoute
   '/login': typeof LoginRoute
   '/projects': typeof ProjectsRoute
@@ -59,21 +67,36 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
+  '/deploy': typeof DeployRoute
   '/deployments': typeof DeploymentsRoute
   '/login': typeof LoginRoute
   '/projects': typeof ProjectsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/deployments' | '/login' | '/projects'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/deploy'
+    | '/deployments'
+    | '/login'
+    | '/projects'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/deployments' | '/login' | '/projects'
-  id: '__root__' | '/' | '/dashboard' | '/deployments' | '/login' | '/projects'
+  to: '/' | '/dashboard' | '/deploy' | '/deployments' | '/login' | '/projects'
+  id:
+    | '__root__'
+    | '/'
+    | '/dashboard'
+    | '/deploy'
+    | '/deployments'
+    | '/login'
+    | '/projects'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DashboardRoute: typeof DashboardRoute
+  DeployRoute: typeof DeployRoute
   DeploymentsRoute: typeof DeploymentsRoute
   LoginRoute: typeof LoginRoute
   ProjectsRoute: typeof ProjectsRoute
@@ -102,6 +125,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DeploymentsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/deploy': {
+      id: '/deploy'
+      path: '/deploy'
+      fullPath: '/deploy'
+      preLoaderRoute: typeof DeployRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
@@ -122,6 +152,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRoute,
+  DeployRoute: DeployRoute,
   DeploymentsRoute: DeploymentsRoute,
   LoginRoute: LoginRoute,
   ProjectsRoute: ProjectsRoute,
