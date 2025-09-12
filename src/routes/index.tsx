@@ -1,4 +1,4 @@
-import '../app.css'
+import '@/app.css'
 import { createFileRoute } from '@tanstack/react-router'
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
