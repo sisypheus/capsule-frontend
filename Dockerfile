@@ -9,8 +9,7 @@ RUN npm install
 
 COPY . .
 
-RUN echo "VITE_BACKEND_URL=${VITE_BACKEND_URL}" > .env.production.local
-RUN echo "--- .env.production.local content ---" && cat .env.production.local
+RUN echo "VITE_BACKEND_URL=${VITE_BACKEND_URL}" > .env
 
 RUN npm run build
 
