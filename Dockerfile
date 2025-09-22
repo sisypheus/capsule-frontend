@@ -3,12 +3,15 @@ FROM node:24-alpine AS builder
 WORKDIR /app
 
 ARG VITE_BACKEND_URL
-ENV VITE_BACKEND_URL=$VITE_BACKEND_URL
 
 COPY package*.json ./
 RUN npm install
 
 COPY . .
+
+RUN echo "VITE_API_BASE_URL=${VITE_API_BASE_URL}" > .env.production.local
+RUN echo "--- .env.production.local content ---" && cat .env.production.local
+
 RUN npm run build
 
 FROM nginx:alpine AS runner
