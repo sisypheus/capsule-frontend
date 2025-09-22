@@ -14,3 +14,8 @@ export const getRepos = async (page: any, perPage: any): Promise<Deployment[]> =
   const response = await api.get('/github/repos' + "?page=" + page + "&per_page=" + perPage);
   return response.data;
 };
+
+export const searchRepos = async (search: string, page: any, perPage: any): Promise<Deployment[]> => {
+  const response = await api.get('/github/repos' + "?search=" + search + "?page=" + page + "&per_page=" + perPage);
+  return response.data;
+};

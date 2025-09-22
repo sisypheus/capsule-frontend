@@ -5,6 +5,7 @@ import AppLayout from '@/components/AppLayout';
 import Divider from '@/components/Divider';
 import Deployments from '@/components/Deployments';
 import Projects from '@/components/Projects';
+import api from '@/api/axios';
 
 export const Route = createFileRoute('/dashboard')({
   component: DashboardPage,
@@ -16,7 +17,7 @@ function DashboardPage() {
   const { data: repos, isLoading: isLoadingProjects } = useRepos();
 
   const githubLink = () => {
-    navigate({ to: import.meta.env.VITE_BACKEND_URL + "/github/install" })
+    window.location.href = import.meta.env.VITE_BACKEND_URL + "/github/install"
   }
 
   const deployProject = () => {
@@ -26,6 +27,17 @@ function DashboardPage() {
   return (
     <AppLayout>
       <div>
+        <button onClick={
+          () => api.post("/deployments", {
+            project: "sisypheus/capsule-frontend",
+            project_name: "sisypheus/capsule-frontend",
+            branch: "main",
+            dockerfile_path: "./"
+          }, {withCredentials: true})
+        }>
+          yo
+
+        </button>
         <div className='my-8'>
           <Divider text='Deployments' />
         </div>

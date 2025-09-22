@@ -21,6 +21,7 @@ type Repo = {
 };
 
 function RouteComponent() {
+  const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const perPage = 12;
 
@@ -44,6 +45,10 @@ function RouteComponent() {
   if (isError) {
     return <div className="p-6 text-red-600">Error loading projects: {(error as any)?.message ?? String(error)}</div>;
   }
+
+  useEffect(() => {
+    
+  }, [search])
 
   // Normalize the API response into an items array and total / totalPages if available
   const items: Repo[] = Array.isArray(repos)
@@ -74,6 +79,8 @@ function RouteComponent() {
                 id="search"
                 name="search"
                 type="search"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search"
                 className="block w-full rounded-md border-0 bg-white py-1.5 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
