@@ -8,7 +8,7 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
   GIT_OPS_REPO: sisypheus/capsule-infra
-  HELM_VALUES_FILE: charts/fronted/values.yaml
+  HELM_VALUES_FILE: charts/frontend/values.yaml
   HELM_APP_NAME: frontend
 
 jobs:
