@@ -36,7 +36,6 @@ function DashboardPage() {
           }, {withCredentials: true})
         }>
           yo
-          test cd
 
         </button>
         <div className='my-8'>
