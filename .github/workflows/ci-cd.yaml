@@ -9,7 +9,6 @@ env:
   IMAGE_NAME: ${{ github.repository }}
   GIT_OPS_REPO: sisypheus/capsule-infra
   HELM_VALUES_FILE: charts/frontend/values.yaml
-  HELM_APP_NAME: frontend
 
 jobs:
   build-and-push:
@@ -73,7 +72,7 @@ jobs:
           sudo wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq && sudo chmod +x /usr/bin/yq
           
           # Modifier le fichier values.yaml
-          yq e -i '.${{ env.HELM_APP_NAME }}.image.tag = env(IMAGE_TAG)' ${{ env.HELM_VALUES_FILE }}
+          yq e -i '.image.tag = env(IMAGE_TAG)' ${{ env.HELM_VALUES_FILE }}
 
       - name: Commit and push changes
         run: |
