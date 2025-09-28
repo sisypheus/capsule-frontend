@@ -29,10 +29,11 @@ function DashboardPage() {
       <div>
         <button onClick={
           () => api.post("/deployments", {
-            project: "sisypheus/capsule-frontend",
-            project_name: "sisypheus/capsule-frontend",
-            branch: "main",
-            dockerfile_path: "./"
+            project: "sisypheus/django-helloworld",
+            project_name: "sisypheus/django-helloworld",
+            branch: "master",
+            dockerfile_path: "./",
+            port: 8000
           }, {withCredentials: true})
         }>
           yo
