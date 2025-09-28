@@ -9,6 +9,7 @@ export default function DeployForm({ projectProp, user }: any) {
   const [project, setProject] = useState(projectProp.name)
   const [name, setName] = useState(project)
   const [branch, setBranch] = useState("main")
+  const [port, setPort] = useState(80)
   const [dockerfilePath, setDockerfilePath] = useState("./")
   const queryClient = useQueryClient()
 
@@ -16,10 +17,10 @@ export default function DeployForm({ projectProp, user }: any) {
     e.preventDefault();
 
     try {
-    await createDeployment({ project, project_name: name, branch, dockerfile_path: dockerfilePath })
-    queryClient.invalidateQueries({ queryKey: ["deployments"] })
+      await createDeployment({ project, project_name: name, branch, dockerfile_path: dockerfilePath })
+      queryClient.invalidateQueries({ queryKey: ["deployments"] })
 
-    navigate({to: "/deployments"})
+      navigate({ to: "/deployments" })
     } catch (e) {
       alert("Error while deploying app")
     }
@@ -96,6 +97,28 @@ export default function DeployForm({ projectProp, user }: any) {
                     placeholder="main"
                     value={branch}
                     onChange={(e: any) => setBranch(e.target.value)}
+                    className="block min-w-0 grow bg-transparent py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-500 focus:outline-none sm:text-sm/6"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="col-span-full">
+              <Divider />
+
+            </div>
+
+            <div className="col-span-full">
+              <label htmlFor="username" className="block text-sm/6 font-medium text-gray-900">Port</label>
+              <div className="mt-2">
+                <div className="flex items-center rounded-md bg-white/5 pl-3 outline-1 -outline-offset-1 outline-white/10 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-500">
+                  <input
+                    id="branch"
+                    name="branch"
+                    type="text"
+                    placeholder="main"
+                    value={branch}
+                    onChange={(e: any) => setPort(e.target.value)}
                     className="block min-w-0 grow bg-transparent py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-500 focus:outline-none sm:text-sm/6"
                   />
                 </div>

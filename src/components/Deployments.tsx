@@ -4,8 +4,9 @@ import { ArrowRightIcon } from '@heroicons/react/24/outline'
 
 const statuses = {
   offline: 'text-gray-500 bg-gray-100/10',
-  online: 'text-green-400 bg-green-400/10',
-  error: 'text-rose-400 bg-rose-400/10',
+  running: 'text-green-400 bg-green-400/10',
+  building: 'text-rose-400 bg-rose-400/10',
+  deploy_failed: 'text-red-400 bg-red-400/10',
 }
 const environments = {
   Preview: 'text-gray-400 bg-gray-400/10 ring-gray-400/20',
@@ -29,10 +30,11 @@ export default function Deployments({ deployments, show = 5, emptyAction, onShow
   }
 
   if (isLoading)
-    return <SkeletonDeployments show={show}/>
+    return <SkeletonDeployments show={show} />
 
   const visible = deployments.slice(0, show);
 
+  console.log(deployments)
   if (!deployments || deployments.length === 0) {
     return (
       <div className="text-center">
@@ -69,7 +71,7 @@ export default function Deployments({ deployments, show = 5, emptyAction, onShow
 
   return (
     <>
-      <ul role="list" className="divide-y divide-white/5">
+      <ul role="list" className="divide-y divide-gray-200">
         {visible.map((deployment: any) => (
           <li key={deployment.id} className="relative flex items-center space-x-4 py-4">
             <div className="min-w-0 flex-auto">
@@ -79,10 +81,9 @@ export default function Deployments({ deployments, show = 5, emptyAction, onShow
                 </div>
                 <h2 className="min-w-0 text-sm font-semibold leading-6 text-white">
                   <a href={deployment.href} className="flex gap-x-2">
-                    <span className="truncate text-gray-800">{deployment.name}</span>
+                    <span className="truncate text-gray-800">{deployment.project_name}</span>
                     <span className="text-gray-800">/</span>
                     <span className="whitespace-nowrap text-gray-800">{deployment.id}</span>
-                    <span className="absolute inset-0" />
                   </a>
                 </h2>
               </div>
@@ -91,18 +92,21 @@ export default function Deployments({ deployments, show = 5, emptyAction, onShow
                 <svg viewBox="0 0 2 2" className="h-0.5 w-0.5 flex-none fill-gray-300">
                   <circle r={1} cx={1} cy={1} />
                 </svg>
-                <p className="whitespace-nowrap">{deployment.statusText}</p>
+                <p className="whitespace-nowrap">{deployment.status.charAt(0).toUpperCase() + deployment.status.slice(1)}</p>
               </div>
             </div>
-            <div
-              className={classNames(
-                environments[deployment.environment],
-                'flex-none rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset',
-              )}
-            >
-              {deployment.environment}
-            </div>
-            <ChevronRightIcon aria-hidden="true" className="h-5 w-5 flex-none text-gray-400" />
+            {deployment.status === "running" && (
+              <a className='flex items-center cursor-pointer' href={deployment.url} target='_blank'>
+                <div
+                  className={
+                    'text-indigo-400 bg-indigo-400/10 ring-indigo-400/30 flex-none rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset'
+                  }
+                >
+                  Production
+                </div>
+                <ChevronRightIcon aria-hidden="true" className="h-5 w-5 flex-none text-gray-400" />
+              </a>
+            )}
           </li>
         ))}
       </ul >
@@ -121,10 +125,10 @@ export default function Deployments({ deployments, show = 5, emptyAction, onShow
   )
 }
 
-export function SkeletonDeployments({show = 5}) {
+export function SkeletonDeployments({ show = 5 }) {
   return (
     <ul role="list" className="divide-y divide-white/5">
-      {Array.from({length: show}).map((placeholder: any, index: number) => (
+      {Array.from({ length: show }).map((placeholder: any, index: number) => (
         <li key={index} className="relative flex items-center space-x-4 py-4">
           <div className="min-w-0 flex-auto">
             <div className="flex items-center gap-x-3">
