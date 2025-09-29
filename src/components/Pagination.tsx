@@ -1,13 +1,13 @@
-export default function Pagination({current, total = 0, onChange}: any) {
+export default function Pagination({current, start, end, total = 0, onChange}: any) {
   return (
     <nav
       aria-label="Pagination"
-      className="flex items-center justify-between border border-gray-200 rounded-xl px-4 py-3 sm:px-6"
+      className="flex items-center justify-between border bg-white border-gray-200 rounded-xl px-4 py-3 sm:px-6"
     >
       <div className="hidden sm:block px-4">
         <p className="text-sm text-gray-700">
-          Showing <span className="font-medium">1</span> to <span className="font-medium">10</span> of{' '}
-          <span className="font-medium">20</span> results
+          Showing <span className="font-medium">{start}</span> to <span className="font-medium">{end}</span> of{' '}
+          <span className="font-medium">{total}</span> results
         </p>
       </div>
       <div className="flex flex-1 justify-between sm:justify-end">

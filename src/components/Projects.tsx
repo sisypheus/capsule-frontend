@@ -4,41 +4,9 @@ import { PlusIcon } from '@heroicons/react/20/solid'
 import { Button } from './Button';
 import { Link } from '@tanstack/react-router';
 
-const clients = [
-  {
-    id: 1,
-    name: 'Tuple',
-    imageUrl: 'https://tailwindui.com/img/logos/48x48/tuple.svg',
-    lastInvoice: { date: 'December 13, 2022', dateTime: '2022-12-13', amount: '$2,000.00', status: 'Overdue' },
-  },
-  {
-    id: 2,
-    name: 'SavvyCal',
-    imageUrl: 'https://tailwindui.com/img/logos/48x48/savvycal.svg',
-    lastInvoice: { date: 'January 22, 2023', dateTime: '2023-01-22', amount: '$14,000.00', status: 'Paid' },
-  },
-  {
-    id: 3,
-    name: 'Reform',
-    imageUrl: 'https://tailwindui.com/img/logos/48x48/reform.svg',
-    lastInvoice: { date: 'January 23, 2023', dateTime: '2023-01-23', amount: '$7,600.00', status: 'Paid' },
-  },
-  {
-    id: 4,
-    name: 'Reform',
-    imageUrl: 'https://tailwindui.com/img/logos/48x48/reform.svg',
-    lastInvoice: { date: 'January 23, 2023', dateTime: '2023-01-23', amount: '$7,600.00', status: 'Paid' },
-  }
-]
-
-export default function Projects({ projects, emptyAction, show = 5, onShowMore, footer, isLoading}: any) {
-
-  function classNames(...classes: string[]) {
-    return classes.filter(Boolean).join(' ')
-  }
-
+export default function Projects({ projects, emptyAction, show = 5, onShowMore, footer, isLoading }: any) {
   if (isLoading)
-    return <SkeletonProjects show={show}/>
+    return <SkeletonProjects show={show} />
 
   if (!projects || projects.length === 0) {
     return (
@@ -87,30 +55,20 @@ export default function Projects({ projects, emptyAction, show = 5, onShowMore, 
                 src={project.icon}
                 className="h-12 w-12 flex-none rounded-lg bg-white object-cover ring-1 ring-gray-900/10"
               />
-              <div className="text-sm font-medium leading-6 text-gray-900">{project.name}</div>
+              <div className="text-sm font-medium leading-6 text-gray-900">{project.fullName}</div>
 
               <Menu as="div" className="relative ml-auto">
                 <MenuButton className="-m-2.5 block p-2.5 text-gray-400 hover:text-gray-500">
                   <span className="sr-only">Open options</span>
-                  <EllipsisHorizontalIcon aria-hidden="true" className="h-5 w-5" />
+                  <EllipsisHorizontalIcon aria-hidden="true" className="h-5 w-5 cursor-pointer" />
                 </MenuButton>
                 <MenuItems
                   className="absolute right-0 z-10 mt-0.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none"
                 >
                   <MenuItem>
                     {() => (
-                      <a
-                        href="#"
-                        className="block px-3 py-1 text-sm leading-6 text-gray-900 data-[focus]:bg-gray-50"
-                      >
-                        View<span className="sr-only">, {project.name}</span>
-                      </a>
-                    )}
-                  </MenuItem>
-                  <MenuItem>
-                    {() => (
                       <Link to="/deploy"
-                      state={{project: project}}
+                        state={{ project: project }}
                         className="block px-3 py-1 text-sm leading-6 text-gray-900 data-[focus]:bg-gray-50"
                       >
                         Deploy
@@ -125,14 +83,21 @@ export default function Projects({ projects, emptyAction, show = 5, onShowMore, 
               <div className="flex justify-between gap-x-4 py-3">
                 <dt className="text-gray-500">Full name</dt>
                 <dd className="text-gray-700">
-                  <time dateTime={project.lastInvoice?.dateTime}>{project.lastInvoice?.date}</time>
+                  <p>{project.name}</p>
                 </dd>
               </div>
 
               <div className="flex justify-between gap-x-4 py-3">
-                <dt className="text-gray-500">Status</dt>
+                <dt className="text-gray-500">Visibility</dt>
                 <dd className="flex items-start gap-x-2">
-                  <span>{project?.private ? "🔒" : "🔓"}</span>
+                  <span>{project?.private ? "Private" : "Public"}</span>
+                </dd>
+              </div>
+
+              <div className="flex justify-between gap-x-4 py-3">
+                <dt className="text-gray-500">Last update</dt>
+                <dd className="flex items-start gap-x-2">
+                  <time dateTime={project.updated_at}>{project.updated_at.split('T')[0]}</time>
                 </dd>
               </div>
             </dl>
@@ -153,11 +118,10 @@ export default function Projects({ projects, emptyAction, show = 5, onShowMore, 
   );
 }
 
-export function SkeletonProjects({show = 3}) {
-  console.log(show)
+export function SkeletonProjects({ show = 3 }) {
   return (
     <ul role="list" className="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8">
-      {Array.from({length: show}).map((project: any, index: number) => (
+      {Array.from({ length: show }).map((project: any, index: number) => (
         <li key={index} className="overflow-hidden rounded-xl border border-gray-200">
           <div className="flex items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6">
             <img

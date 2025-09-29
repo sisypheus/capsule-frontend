@@ -14,9 +14,10 @@ export type DeploymentDto = {
   project_name: string;
   branch?: string;
   dockerfile_path?: string;
+  port?: number
 }
 
-export const getDeployments = async (page: number, perPage: number): Promise<Deployment[]> => {
+export const getDeployments = async (page: number, perPage: number): Promise<any> => {
   const response = await api.get('/deployments?page=' + page + "&per_page=" + perPage);
   return response.data;
 };

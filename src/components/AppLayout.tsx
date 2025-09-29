@@ -10,9 +10,9 @@ const user = {
     'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 }
 const navigation = [
-  { name: 'Dashboard', href: '/dashboard'},
-  { name: 'Deployments', href: '/deployments'},
-  { name: 'Projects', href: '/projects'},
+  { name: 'Dashboard', href: '/dashboard' },
+  { name: 'Deployments', href: '/deployments' },
+  { name: 'Projects', href: '/projects' },
 ]
 const userNavigation = [
   { name: 'Your Profile', href: '/profile' },
@@ -78,7 +78,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
                   >
                     {userNavigation.map((item) => (
                       <MenuItem key={item.name}>
-                        <a href={item.href} className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
+                        <a href={item.href} className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-50">
                           {item.name}
                         </a>
                       </MenuItem>
@@ -88,7 +88,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
               </div>
               <div className="-mr-2 flex items-center sm:hidden">
                 {/* Mobile menu button */}
-                <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-50 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                   <span className="absolute -inset-0.5" />
                   <span className="sr-only">Open main menu</span>
                   <Bars3Icon aria-hidden="true" className="block h-6 w-6 group-data-[open]:hidden" />
@@ -141,7 +141,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
                     key={item.name}
                     as="a"
                     href={item.href}
-                    className="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800"
+                    className="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-800"
                   >
                     {item.name}
                   </DisclosureButton>
@@ -151,13 +151,13 @@ export default function AppLayout({ children }: { children: ReactNode }) {
           </DisclosurePanel>
         </Disclosure>
 
-        <div className="py-10 h-full bg-gray-100">
+        <div className="py-10 h-full bg-gray-50">
           <header>
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
               <h1 className="text-3xl font-bold leading-tight tracking-tight text-gray-900">{current_page?.name}</h1>
             </div>
           </header>
-          <div className='bg-gray-100'>
+          <div className='bg-gray-50'>
             <div className="mx-auto h-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8">{children}</div>
           </div>
         </div>

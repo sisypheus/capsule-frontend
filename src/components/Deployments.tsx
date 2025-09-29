@@ -3,26 +3,11 @@ import { Button } from './Button'
 import { ArrowRightIcon } from '@heroicons/react/24/outline'
 
 const statuses = {
-  offline: 'text-gray-500 bg-gray-100/10',
+  offline: 'text-gray-500 bg-gray-50/10',
   running: 'text-green-400 bg-green-400/10',
-  building: 'text-rose-400 bg-rose-400/10',
-  deploy_failed: 'text-red-400 bg-red-400/10',
+  building: 'text-orange-400 bg-orange-400/10',
+  deploy_failed: 'text-red-500 bg-red-500/10',
 }
-const environments = {
-  Preview: 'text-gray-400 bg-gray-400/10 ring-gray-400/20',
-  Production: 'text-indigo-400 bg-indigo-400/10 ring-indigo-400/30',
-}
-
-// {
-//   id: 4,
-//   href: '#',
-//   projectName: 'api.protocol.chat',
-//   teamName: 'Protocol',
-//   status: 'error',
-//   statusText: 'Failed to deploy 6d ago',
-//   description: 'Deploys from GitHub',
-//   environment: 'Preview',
-// }
 
 export default function Deployments({ deployments, show = 5, emptyAction, onShowMore, footer, isLoading }: any) {
   function classNames(...classes: string[]) {
@@ -34,7 +19,6 @@ export default function Deployments({ deployments, show = 5, emptyAction, onShow
 
   const visible = deployments.slice(0, show);
 
-  console.log(deployments)
   if (!deployments || deployments.length === 0) {
     return (
       <div className="text-center">

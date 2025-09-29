@@ -2,11 +2,12 @@ import AppLayout from '@/components/AppLayout';
 import Divider from '@/components/Divider';
 import Pagination from '@/components/Pagination';
 import Projects from '@/components/Projects';
-import { getRepos } from '@/features/repo/api';
+import { getRepos, searchRepos } from '@/features/repo/api';
+import { useDebounce } from '@/hooks/useDebounce';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export const Route = createFileRoute('/projects')({
   component: RouteComponent,
@@ -25,20 +26,27 @@ function RouteComponent() {
   const [page, setPage] = useState(1);
   const perPage = 12;
 
+  const debouncedSearch = useDebounce(search, 400);
+  const queryKey = ['repos', { search: debouncedSearch, page, perPage }];
+
   const githubLink = () => {
     window.location.href = import.meta.env.VITE_BACKEND_URL + "/github/install"
   }
-
   const queryClient = useQueryClient();
 
   const {
-    data: repos,
+    data,
     isLoading,
     isError,
     error,
-  } = useQuery({
-    queryKey: ['repos', page, perPage],
-    queryFn: () => getRepos(page, perPage),
+  } = useQuery<any>({
+    queryKey: queryKey,
+    queryFn: () => {
+      if (debouncedSearch && debouncedSearch.length >= 3) {
+        return searchRepos(debouncedSearch, page, perPage);
+      }
+      return getRepos(page, perPage);
+    },
     staleTime: 1000 * 60 * 2,
   });
 
@@ -46,27 +54,13 @@ function RouteComponent() {
     return <div className="p-6 text-red-600">Error loading projects: {(error as any)?.message ?? String(error)}</div>;
   }
 
-  useEffect(() => {
-    
-  }, [search])
-
-  // Normalize the API response into an items array and total / totalPages if available
-  const items: Repo[] = Array.isArray(repos)
-    ? (repos as any[])
-    : (repos && (repos as any).items) || (repos && (repos as any).repos) || [];
-
-  const total: number | undefined = repos && typeof repos === 'object' && 'total' in repos ? (repos as any).total : undefined;
-  const totalPages: number | undefined =
-    repos && typeof repos === 'object' && 'totalPages' in repos ? (repos as any).totalPages : total ? Math.ceil(total / perPage) : undefined;
-
-  // TODO: get total
   return (
     <AppLayout>
       <div>
         <div className='my-8'>
           <Divider text='Projects' />
         </div>
-        <div className="flex flex-1 items-center justify-center px-2 lg:ml-6 lg:justify-end">
+        <div className="flex flex-1 items-center justify-center pt-2 pb-8 lg:ml-6 lg:justify-end">
           <div className="w-full max-w-lg lg:max-w-xs">
             <label htmlFor="search" className="sr-only">
               Search
@@ -88,14 +82,14 @@ function RouteComponent() {
           </div>
         </div>
         <Projects
-          projects={repos}
+          projects={data?.items}
           emptyAction={githubLink}
           show={perPage}
           isLoading={isLoading}
           footer={
             <Pagination
               current={page}
-              total={repos?.length}
+              total={data?.items?.length}
               onChange={(p: number) => setPage(p)}
             />
           }
