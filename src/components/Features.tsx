@@ -10,20 +10,20 @@ const features = [
   {
     title: 'Fast deployment',
     description:
-      "Keep track of everyone's salaries and whether or not they've been paid. Direct deposit not supported.",
-    image: "/bg-features.jpg",
+      "Once you've given access to Capsule's github app, you can deploy any project in under 5 minutes.",
+    image: "/images/deployments.png",
   },
   {
     title: 'Secured sandbox',
     description:
-      "All of your receipts organized into one place, as long as you don't mind typing in the data by hand.",
-    image: "/bg-features.jpg",
+      "All deployments are deployed in a sandbox completely isolated from other sandboxes.",
+    image: "/images/projects.png",
   },
   {
     title: 'Up to 2 concurrent sandboxes',
     description:
-      "We only sell our software to companies who don't deal with VAT at all, so technically we do all the VAT stuff they need.",
-    image: "/bg-features.jpg",
+      "You can have up to 2 different projects deployed running concurrently, on any project.",
+    image: "/images/concurrent.png",
   }
 ]
 
@@ -63,11 +63,10 @@ export function PrimaryFeatures() {
       <Container className="relative">
         <div className="max-w-2xl md:mx-auto md:text-center xl:max-w-none">
           <h2 className="font-display text-3xl tracking-tight text-white sm:text-4xl md:text-5xl">
-            Everything you need to run your books.
+            Everything you need to run your project.
           </h2>
           <p className="mt-6 text-lg tracking-tight text-blue-100">
-            Well everything you need if you aren’t that picky about minor
-            details like tax compliance.
+            No advanced feature (yet), just the essentials to get up and running.
           </p>
         </div>
         <TabGroup
@@ -84,14 +83,14 @@ export function PrimaryFeatures() {
                       className={clsx(
                         'group relative rounded-full px-4 py-1 lg:rounded-l-xl lg:rounded-r-none lg:p-6',
                         selectedIndex === featureIndex
-                          ? 'bg-white lg:bg-white/10 lg:ring-1 lg:ring-inset lg:ring-white/10'
+                          ? 'bg-white lg:bg-white/10'
                           : 'hover:bg-white/10 lg:hover:bg-white/5',
                       )}
                     >
                       <h3>
                         <Tab
                           className={clsx(
-                            'font-display text-lg ui-not-focus-visible:outline-none',
+                            'text-lg outline-none',
                             selectedIndex === featureIndex
                               ? 'text-blue-600 lg:text-white'
                               : 'text-blue-100 hover:text-white lg:text-white',

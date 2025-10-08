@@ -5,7 +5,6 @@ import AppLayout from '@/components/AppLayout';
 import Divider from '@/components/Divider';
 import Deployments from '@/components/Deployments';
 import Projects from '@/components/Projects';
-import api from '@/api/axios';
 
 export const Route = createFileRoute('/dashboard')({
   component: DashboardPage,
@@ -27,36 +26,23 @@ function DashboardPage() {
   return (
     <AppLayout>
       <div>
-        <button onClick={
-          () => api.post("/deployments", {
-            project: "sisypheus/django-helloworld",
-            project_name: "sisypheus/django-helloworld",
-            branch: "master",
-            dockerfile_path: "./",
-            port: 8000
-          }, {withCredentials: true})
-        }>
-          yo
-
-        </button>
         <div className='my-8'>
           <Divider text='Deployments' />
         </div>
         <Deployments
-          deployments={deployments || []}
+          deployments={deployments?.deployments || []}
           show={4}
           emptyAction={deployProject}
           onShowMore={() => navigate({ to: "/deployments" })}
           isLoading={isLoadingDeployments}
         />
 
-
         <div className='my-8'>
           <Divider text='Projects' />
         </div>
 
         <Projects
-          projects={repos || []}
+          projects={repos?.items || []}
           emptyAction={githubLink}
           show={3}
           onShowMore={() => navigate({ to: "/projects" })}

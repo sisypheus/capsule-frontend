@@ -1,4 +1,4 @@
-export default function Pagination({current, start, end, total = 0, onChange}: any) {
+export default function Pagination({current, start = 1, end, total = 0, onChange}: any) {
   return (
     <nav
       aria-label="Pagination"

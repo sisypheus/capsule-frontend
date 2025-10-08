@@ -89,7 +89,9 @@ function RouteComponent() {
           footer={
             <Pagination
               current={page}
-              total={data?.items?.length}
+              start={(page - 1) * perPage + 1}
+              end={Math.min(page * perPage, data?.items?.length)}
+              total={data?.total_count}
               onChange={(p: number) => setPage(p)}
             />
           }

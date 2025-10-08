@@ -128,25 +128,22 @@ export function Pricing() {
             for everyone.
           </h2>
           <p className="mt-4 text-lg text-slate-400">
-            It doesn’t matter what size your business is, our software won’t
-            work well for you.
+            There is currently only one plan available, as it is just my side project.
           </p>
         </div>
-        <div className="-mx-4 mt-16 grid max-w-2xl grid-cols-1 gap-y-10 sm:mx-auto lg:-mx-8 lg:max-w-none lg:grid-cols-3 xl:mx-0 xl:gap-x-8">
+        <div className="-mx-4 mt-16 max-w-2xl gap-y-10 sm:mx-auto lg:-mx-8 lg:max-w-none xl:mx-0 xl:gap-x-8 items-center justify-center place-items-center flex">
           <Plan
             featured
-            name="Small business"
-            price="$15"
-            description="Perfect for small / medium sized businesses."
-            href="/register"
+            name="Everyone"
+            price="Free"
+            description="Perfect for development purposes"
+            href="/login"
             features={[
-              'Send 25 quotes and invoices',
-              'Connect up to 5 bank accounts',
-              'Track up to 50 expenses per month',
-              'Automated payroll support',
-              'Export up to 12 reports',
-              'Bulk reconcile transactions',
-              'Track in multiple currencies',
+              'Unlimited projects',
+              'Up to 2 concurrent environments',
+              'Github connection',
+              'Deployment pipeline monitoring',
+              'Deployment history',
             ]}
           />
         </div>

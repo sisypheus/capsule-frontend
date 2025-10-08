@@ -10,12 +10,12 @@ export interface Deployment {
   url: string | null;
 }
 
-export const getRepos = async (page: any, perPage: any): Promise<Deployment[]> => {
+export const getRepos = async (page: any, perPage: any): Promise<any[]> => {
   const response = await api.get('/github/repos' + "?page=" + page + "&per_page=" + perPage);
   return response.data;
 };
 
-export const searchRepos = async (search: string, page: any, perPage: any): Promise<Deployment[]> => {
+export const searchRepos = async (search: string, page: any, perPage: any): Promise<any[]> => {
   const params = new URLSearchParams();
 
   if (search && search.trim() !== "") {
