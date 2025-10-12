@@ -7,13 +7,13 @@ const faqs = [
       "Once you've granted access to capsule, you can start deploying your projects.",
   },
   {
-    question: 'yo bro whatsup',
-    answer: 'Absolutely, we are happy to take your money in all forms.',
+    question: 'How much does it cost ?',
+    answer: "Nothing, it's free for anyone to try and deploy their applications.",
   },
   {
-    question: 'How do I apply for a job at TaxPal?',
+    question: 'Is it easy to use ?',
     answer:
-      'We only hire our customers, so subscribe for a minimum of 6 months and then let’s talk.',
+      "If you're a software engineer and you know how to create a Dockerfile for your project, it's enough !",
   },
 ]
 type question = { question: string; answer: string }

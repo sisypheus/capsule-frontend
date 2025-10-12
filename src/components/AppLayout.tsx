@@ -1,27 +1,23 @@
+import { useUser } from '@/hooks/useUser'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useLocation } from '@tanstack/react-router'
 import type { ReactNode } from 'react'
 
-const user = {
-  name: 'Tom Cook',
-  email: 'tom@example.com',
-  imageUrl:
-    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-}
 const navigation = [
   { name: 'Dashboard', href: '/dashboard' },
   { name: 'Deployments', href: '/deployments' },
   { name: 'Projects', href: '/projects' },
 ]
 const userNavigation = [
-  { name: 'Your Profile', href: '/profile' },
-  { name: 'Settings', href: '/settings' },
-  // TODO: sign out
-  { name: 'Sign out', href: '#' },
+  // { name: 'Your Profile', href: '/profile' },
+  // { name: 'Settings', href: '/settings' },
+  { name: 'Sign out', href: import.meta.env.VITE_BACKEND_URL + '/auth/logout' },
 ]
 
 export default function AppLayout({ children }: { children: ReactNode }) {
+  const { user } = useUser();
+  console.log(user)
   const current = useLocation()
   const current_page = navigation.find((value) => value.href == current.href)
 
@@ -39,7 +35,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
                 <div className="flex flex-shrink-0 items-center">
                   <img
                     alt="Capsule"
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    src="/images/logo.png"
                     className="h-8 w-auto block"
                   />
                 </div>
@@ -69,7 +65,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
                     <MenuButton className="relative flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">Open user menu</span>
-                      <img alt="" src={user.imageUrl} className="h-8 w-8 rounded-full" />
+                      <img alt="" src={user?.user_metadata.avatar_url} className="h-8 w-8 rounded-full" />
                     </MenuButton>
                   </div>
                   <MenuItems
@@ -78,7 +74,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
                   >
                     {userNavigation.map((item) => (
                       <MenuItem key={item.name}>
-                        <a href={item.href} className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-50">
+                        <a href={item.href} className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-50 cursor-pointer">
                           {item.name}
                         </a>
                       </MenuItem>
@@ -120,11 +116,11 @@ export default function AppLayout({ children }: { children: ReactNode }) {
             <div className="border-t border-gray-200 pb-3 pt-4">
               <div className="flex items-center px-4">
                 <div className="flex-shrink-0">
-                  <img alt="" src={user.imageUrl} className="h-10 w-10 rounded-full" />
+                  <img alt="logo" src={"/images/logo.png"} className="h-10 w-10 rounded-full" />
                 </div>
                 <div className="ml-3">
-                  <div className="text-base font-medium text-gray-800">{user.name}</div>
-                  <div className="text-sm font-medium text-gray-500">{user.email}</div>
+                  <div className="text-base font-medium text-gray-800">{user?.name}</div>
+                  <div className="text-sm font-medium text-gray-500">{user?.email}</div>
                 </div>
                 <button
                   type="button"

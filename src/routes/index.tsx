@@ -12,22 +12,6 @@ export const Route = createFileRoute('/')({
 })
 
 function App() {
-  // const [user, setUser] = useState(null);
-  // const [loading, setLoading] = useState(true);
-
-  // useEffect(() => {
-  //   axios.get(import.meta.env.VITE_BACKEND_URL, { withCredentials: true })
-  //     .then((response: any) => {
-  //       setUser(response.data);
-  //     })
-  //     .catch(() => {
-  //       setUser(null);
-  //     })
-  //     .finally(() => {
-  //       setLoading(false);
-  //     });
-  // }, []);
-
   return (
     <>
       <Header />
