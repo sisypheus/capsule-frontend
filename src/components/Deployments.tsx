@@ -67,7 +67,7 @@ export default function Deployments({ deployments, show = 5, emptyAction, onShow
                   <a href={deployment.href} className="flex gap-x-2">
                     <span className="truncate text-gray-800">{deployment.project_name}</span>
                     <span className="text-gray-800">/</span>
-                    <span className="whitespace-nowrap text-gray-800">{deployment.id}</span>
+                    <span className="whitespace-nowrap text-gray-800 truncate">{deployment.id}</span>
                   </a>
                 </h2>
               </div>
