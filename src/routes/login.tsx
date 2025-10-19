@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { Button } from '@/components/Button'
-// import { Logo } from '@/components/Logo'
 import { SlimLayout } from '@/components/SlimLayout'
 
 export const Route = createFileRoute('/login')({
@@ -17,11 +16,15 @@ function RouteComponent() {
     <SlimLayout>
       <div className="flex">
         <Link to="/" aria-label="Home">
-          {/* <Logo className="h-10 w-auto" /> */}
+          <img
+            alt="Capsule logo"
+            src="/images/logo.png"
+            className="h-10 w-auto block"
+          />
         </Link>
       </div>
       <div className='my-8'>
-        <h2 className="mt-20 text-lg font-semibold text-gray-900">
+        <h2 className="text-lg font-semibold text-gray-900">
           Sign in to your account
         </h2>
         <p className="mt-2 text-sm text-gray-700">

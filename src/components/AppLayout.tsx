@@ -17,7 +17,6 @@ const userNavigation = [
 
 export default function AppLayout({ children }: { children: ReactNode }) {
   const { user } = useUser();
-  console.log(user)
   const current = useLocation()
   const current_page = navigation.find((value) => value.href == current.href)
 
@@ -34,7 +33,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
               <div className="flex">
                 <div className="flex flex-shrink-0 items-center">
                   <img
-                    alt="Capsule"
+                    alt="Capsule logo"
                     src="/images/logo.png"
                     className="h-8 w-auto block"
                   />

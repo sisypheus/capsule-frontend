@@ -23,7 +23,6 @@ export const getDeployments = async (page: number, perPage: number): Promise<any
 };
 
 export const createDeployment = async (deploymentDto: DeploymentDto): Promise<Deployment> => {
-  console.log(deploymentDto)
   const response = await api.post('/deployments', { ...deploymentDto }, {withCredentials: true});
   return response.data;
 };

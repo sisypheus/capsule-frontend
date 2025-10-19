@@ -12,8 +12,6 @@ export const Route = createFileRoute('/deploy')({
 function RouteComponent() {
   const location = useLocation()
   const [project, setProject] = useState(location.state?.project)
-  console.log(location.state)
-  // get user
   const queryClient = useQueryClient();
 
 
