@@ -17,10 +17,10 @@ export default function DeployForm({ projectProp }: any) {
     e.preventDefault();
 
     try {
-      await createDeployment({ project: name, project_name: project, branch, dockerfile_path: dockerfilePath, port })
+      const deploy = await createDeployment({ project: name, project_name: project, branch, dockerfile_path: dockerfilePath, port })
       queryClient.invalidateQueries({ queryKey: ["deployments"] })
 
-      navigate({ to: "/deployments" })
+      navigate({ to: `/deployment/$id/logs`, params: { id: deploy.id } })
     } catch (e) {
       alert("Error while deploying app")
     }
@@ -128,7 +128,7 @@ export default function DeployForm({ projectProp }: any) {
           </button>
           <button
             type="submit"
-            className="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+            className="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 cursor-pointer"
           >
             Deploy 🚀
           </button>
