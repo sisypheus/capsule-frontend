@@ -22,7 +22,12 @@ export const getDeployments = async (page: number, perPage: number): Promise<any
   return response.data;
 };
 
+export const getDeployment = async (id: string): Promise<any> => {
+  const response = await api.get('/deployments/' + id);
+  return response.data;
+};
+
 export const createDeployment = async (deploymentDto: DeploymentDto): Promise<Deployment> => {
-  const response = await api.post('/deployments', { ...deploymentDto }, {withCredentials: true});
+  const response = await api.post('/deployments', { ...deploymentDto }, { withCredentials: true });
   return response.data;
 };
