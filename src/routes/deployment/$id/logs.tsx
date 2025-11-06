@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
-import { createFileRoute, Link, notFound, useLoaderData } from '@tanstack/react-router'
+import { createFileRoute, Link, notFound, useLoaderData, useLocation, useNavigate, useRouter } from '@tanstack/react-router'
 import { io, Socket } from 'socket.io-client';
 import AppLayout from '@/components/AppLayout';
 import Divider from '@/components/Divider';
 import { Button } from '@/components/Button';
 import { getDeployment } from '@/features/deployments/api';
+import { useUser } from '@/hooks/useUser';
 
 export const Route = createFileRoute('/deployment/$id/logs')({
   loader: async ({ params }) => {
@@ -18,12 +19,16 @@ export const Route = createFileRoute('/deployment/$id/logs')({
 
 function LogPage() {
   const id = useLoaderData({ from: "/deployment/$id/logs" });
-  console.log(id)
+  const user = useUser()
+  const router = useRouter()
   const [logs, setLogs] = useState<string[]>([]);
+  const [deploymentDone, setDeploymentDone] = useState<string>("");
   const socketRef = useRef<Socket | null>(null);
   const logContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!user.user)
+      return;
     const socket = io(import.meta.env.VITE_BACKEND_URL, {
       withCredentials: true,
     });
@@ -37,18 +42,26 @@ function LogPage() {
       setLogs((prevLogs) => [...prevLogs, message]);
     });
 
-    socket.on('deploymentFinished', (message: string) => {
-
+    socket.on('deploymentDone', (message: string) => {
+      setDeploymentDone(message)
     });
 
     return () => {
       socket.disconnect();
     };
-  }, [id]);
+  }, [id, user.user]);
 
   useEffect(() => {
     logContainerRef.current?.scrollTo(0, logContainerRef.current.scrollHeight);
   }, [logs]);
+
+  const goToPreview = () => {
+    window.open(deploymentDone, "_blank")
+  }
+
+  const goBack = () => {
+    router.history.back()
+  }
 
   return (
     <div className='overflow-y-hidden'>
@@ -75,11 +88,11 @@ function LogPage() {
         </div>
         <div className='flex w-full justify-end my-4 gap-x-2'>
           <Link to='/dashboard'>
-            <Button onClick={() => console.log("click")} className="cursor-pointer" variant='outline'>
+            <Button onClick={goBack} className="cursor-pointer" variant='outline'>
               Return
             </Button>
           </Link>
-          <Button onClick={() => console.log("click")} disabled className="disabled:cursor-wait disabled:bg-gray-400 cursor-pointer" type="solid">
+          <Button onClick={goToPreview} disabled={!deploymentDone} className="disabled:cursor-wait disabled:bg-gray-400 cursor-pointer" type="solid">
             View deployment
           </Button>
         </div>
