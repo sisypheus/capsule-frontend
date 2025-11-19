@@ -60,11 +60,11 @@ function LogPage() {
   }
 
   const goBack = () => {
-    router.history.back()
+    router.navigate({ to: "/dashboard" })
   }
 
   return (
-    <div className='overflow-y-hidden'>
+    <div className='overflow-y-hidden h-full'>
       <AppLayout>
         <div className='scroll-none'>
           <div className='my-8'>
@@ -74,7 +74,6 @@ function LogPage() {
             className='bg-slate-200/10 max-h-96 min-h-96 rounded-md shadow shadow-indigo-400 ring ring-indigo-100'
             ref={logContainerRef}
             style={{
-              // height: '400px',
               overflowY: 'scroll',
               fontFamily: 'monospace',
               padding: '10px',

@@ -10,8 +10,6 @@ const navigation = [
   { name: 'Projects', href: '/projects' },
 ]
 const userNavigation = [
-  // { name: 'Your Profile', href: '/profile' },
-  // { name: 'Settings', href: '/settings' },
   { name: 'Sign out', href: import.meta.env.VITE_BACKEND_URL + '/auth/logout' },
 ]
 
@@ -26,7 +24,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
 
   return (
     <>
-      <div className="min-h-full">
+      <div className="min-h-full h-full">
         <Disclosure as="nav" className="bg-white shadow-sm">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 justify-between">
